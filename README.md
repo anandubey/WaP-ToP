@@ -1,4 +1,4 @@
-# WaP-ToP
+# WaP-ToP :: WhatsApp Photos to PDF
 This is a simple python script which downloads all the pictures in a group and combine them to generate a pdf for you.
 
 Note:
