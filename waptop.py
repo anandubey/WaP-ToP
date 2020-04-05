@@ -145,26 +145,23 @@ def imageDownloadLoop(image_list):
 	progress = progressbar.ProgressBar(maxval=len(image_list), widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
 	progress.start()
 	for i in  range(1, len(image_list)+1):
-		try:
-			image_list[i-1].click()
-			while True:
-				retry_flag = 0
-				while retry_flag != 20:
-					clicked_img = findElemByclass(SRC_IMG_CLASS)
-					retry_flag += 1
-				if clicked_img:
-					break
-				if retry_flag == 20:
-					break
-			img_src = clicked_img[0].get_attribute("src")
-			filename = "image_" + str(i) +".jpeg"
-			downloader(img_src, filename, True)
-			progress.update(i)
-		except Exception as e:
-			print("")
-		
+		image_list[i-1].click()
+		time.sleep(1)
+		while True:
+			retry_flag = 0
+			while retry_flag != 20:
+				clicked_img = findElemByclass(SRC_IMG_CLASS)
+				retry_flag += 1
+			if clicked_img:
+				break
+			if retry_flag == 20:
+				break
+		img_src = clicked_img[0].get_attribute("src")
+		filename = "image_" + str(i).zfill(3) +".jpeg"
+		downloader(img_src, filename, True)
+		progress.update(i)	
 	progress.finish()
-	return [os.getcwd() + '/temp_images/image_' + str(i) + ".jpeg" for i in range(1,len(image_list)+1)]
+	return sorted([os.getcwd() + '/temp_images/'+ image for image in os.listdir(os.getcwd() + '/temp_images/')])
 
 
 def pdf_generator(image_list):
